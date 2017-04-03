@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"socket.io-redis",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "socket.io-redis",
+    "description": "api documentation for [socket.io-redis (v4.0.0)](https://github.com/socketio/socket.io-redis#readme) [![npm package](https://img.shields.io/npm/v/npmdoc-socket.io-redis.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-socket.io-redis) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-socket.io-redis.svg)](https://travis-ci.org/npmdoc/node-npmdoc-socket.io-redis)",
     "devDependencies": {
-        "socket.io-redis": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "socket.io-redis": "*",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-socket.io-redis",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-socket.io-redis",
+    "keywords": [
+        "documentation",
+        "socket.io-redis"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_socket.io_redis.js",
+    "name": "npmdoc-socket.io-redis",
+    "nameAlias": "npmdoc_socket_io_redis",
+    "nameOriginal": "npmdoc-socket.io-redis",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-socket.io-redis.git"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
     "version": "0.0.1"
 }
