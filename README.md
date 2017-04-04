@@ -3,7 +3,7 @@
 
 [![NPM](https://nodei.co/npm/socket.io-redis.png?downloads=true)](https://www.npmjs.com/package/socket.io-redis)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-socket.io-redis_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build..beta..travis-ci.org/apidoc.html)
+[![apidoc](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-socket.io-redis_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/screenCapture.npmPackageListing.svg)
 
