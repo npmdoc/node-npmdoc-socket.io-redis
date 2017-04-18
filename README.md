@@ -1,9 +1,14 @@
-# api documentation for  [socket.io-redis (v4.0.0)](https://github.com/socketio/socket.io-redis#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-socket.io-redis.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-socket.io-redis) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-socket.io-redis.svg)](https://travis-ci.org/npmdoc/node-npmdoc-socket.io-redis)
+# npmdoc-socket.io-redis
+
+#### api documentation for  [socket.io-redis (v4.0.0)](https://github.com/socketio/socket.io-redis#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-socket.io-redis.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-socket.io-redis) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-socket.io-redis.svg)](https://travis-ci.org/npmdoc/node-npmdoc-socket.io-redis)
+
 #### [![Build Status](https://travis-ci.org/socketio/socket.io-redis.svg?branch=master)](https://travis-ci.org/socketio/socket.io-redis) [![NPM version](https://badge.fury.io/js/socket.io-redis.svg)](http://badge.fury.io/js/socket.io-redis)
 
-[![NPM](https://nodei.co/npm/socket.io-redis.png?downloads=true)](https://www.npmjs.com/package/socket.io-redis)
+[![NPM](https://nodei.co/npm/socket.io-redis.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/socket.io-redis)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-socket.io-redis_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-socket.io-redis/build/screenCapture.npmPackageListing.svg)
 
@@ -48,17 +53,14 @@
     "license": "MIT",
     "maintainers": [
         {
-            "name": "darrachequesne",
-            "email": "damien.arrachequesne@gmail.com"
+            "name": "darrachequesne"
         },
         {
-            "name": "rauchg",
-            "email": "rauchg@gmail.com"
+            "name": "rauchg"
         }
     ],
     "name": "socket.io-redis",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/socketio/socket.io-redis.git"
@@ -69,16 +71,6 @@
     "version": "4.0.0"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module socket.io-redis](#apidoc.module.socket.io-redis)
-
-
-
-# <a name="apidoc.module.socket.io-redis"></a>[module socket.io-redis](#apidoc.module.socket.io-redis)
 
 
 
