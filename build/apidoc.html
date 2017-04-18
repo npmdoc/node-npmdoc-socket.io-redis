@@ -61,12 +61,314 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.socket.io-redis">module socket.io-redis</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.socket.io-redis.io-redis">
+            function <span class="apidocSignatureSpan">socket.</span>io-redis
+            <span class="apidocSignatureSpan">(uri, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.socket.io-redis.io-redis.toString">
+            function <span class="apidocSignatureSpan">socket.io-redis.</span>io-redis.toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.socket.io-redis.toString">
+            function <span class="apidocSignatureSpan">socket.io-redis.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.socket.io-redis.toString">module socket.io-redis.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.socket.io-redis.toString.toString">
+            function <span class="apidocSignatureSpan">socket.io-redis.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.socket.io-redis" id="apidoc.module.socket.io-redis">module socket.io-redis</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.socket.io-redis.io-redis" id="apidoc.element.socket.io-redis.io-redis">
+        function <span class="apidocSignatureSpan">socket.</span>io-redis
+        <span class="apidocSignatureSpan">(uri, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function adapter(uri, opts) {
+  opts = opts || {};
+
+  // handle options only
+  if (&#x27;object&#x27; == typeof uri) {
+    opts = uri;
+    uri = null;
+  }
+
+  // opts
+  var pub = opts.pubClient;
+  var sub = opts.subClient;
+
+  var prefix = opts.key || &#x27;socket.io&#x27;;
+  var subEvent = opts.subEvent || &#x27;messageBuffer&#x27;;
+  var requestsTimeout = opts.requestsTimeout || 1000;
+  var withChannelMultiplexing = false !== opts.withChannelMultiplexing;
+
+  // init clients if needed
+  function createClient() {
+    if (uri) {
+      // handle uri string
+      return redis(uri, opts);
+    } else {
+      return redis(opts);
+    }
+  }
+
+  if (!pub) pub = createClient();
+  if (!sub) sub = createClient();
+
+  // this server&#x27;s key
+  var uid = uid2(6);
+
+<span class="apidocCodeCommentSpan">  /**
+   * Adapter constructor.
+   *
+   * @param {String} namespace name
+   * @api public
+   */
+</span>
+  function Redis(nsp){
+    Adapter.call(this, nsp);
+
+    this.uid = uid;
+    this.prefix = prefix;
+    this.requestsTimeout = requestsTimeout;
+    this.withChannelMultiplexing = withChannelMultiplexing;
+
+    this.channel = prefix + &#x27;#&#x27; + nsp.name + &#x27;#&#x27;;
+    this.requestChannel = prefix + &#x27;-request#&#x27; + this.nsp.name + &#x27;#&#x27;;
+    this.responseChannel = prefix + &#x27;-response#&#x27; + this.nsp.name + &#x27;#&#x27;;
+    this.requests = {};
+    this.customHook = function(data, cb){ cb(null); }
+
+    if (String.prototype.startsWith) {
+      this.channelMatches = function (messageChannel, subscribedChannel) {
+        return messageChannel.startsWith(subscribedChannel);
+      }
+    } else { // Fallback to other impl for older Node.js
+      this.channelMatches = function (messageChannel, subscribedChannel) {
+        return messageChannel.substr(0, subscribedChannel.length) === subscribedChannel;
+      }
+    }
+    this.pubClient = pub;
+    this.subClient = sub;
+
+    var self = this;
+
+    sub.subscribe([this.channel, this.requestChannel, this.responseChannel], function(err){
+      if (err) self.emit(&#x27;error&#x27;, err);
+    });
+
+    sub.on(subEvent, this.onmessage.bind(this));
+
+    function onError(err) {
+      self.emit(&#x27;error&#x27;, err);
+    }
+    pub.on(&#x27;error&#x27;, onError);
+    sub.on(&#x27;error&#x27;, onError);
+  }
+
+  /**
+   * Inherits from `Adapter`.
+   */
+
+  Redis.prototype.__proto__ = Adapter.prototype;
+
+  /**
+   * Called with a subscription message
+   *
+   * @api private
+   */
+
+  Redis.prototype.onmessage = function(channel, msg){
+    channel = channel.toString();
+
+    if (this.channelMatches(channel, this.requestChannel)) {
+      return this.onrequest(channel, msg);
+    } else if (this.channelMatches(channel, this.responseChannel)) {
+      return this.onresponse(channel, msg);
+    } else if (!this.channelMatches(channel, this.channel)) {
+      return debug(&#x27;ignore different channel&#x27;);
+    }
+
+    var args = msgpack.decode(msg);
+    var packet;
+
+    if (uid == args.shift()) return debug(&#x27;ignore same uid&#x27;);
+
+    packet = args[0];
+
+    if (packet &#x26;&#x26; packet.nsp === undefined) {
+      packet.nsp = &#x27;/&#x27;;
+    }
+
+    if (!packet || packet.nsp != this.nsp.name) {
+      return debug(&#x27;ignore different namespace&#x27;);
+    }
+
+    args.push(true);
+
+    this.broadcast.apply(this, args);
+  };
+
+  /**
+   * Called on request from another node
+   *
+   * @api private
+   */
+
+  Redis.prototype.onrequest = function(channel, msg){
+    var self = this;
+    var request;
+
+    try {
+      request = JSON.parse(msg);
+    } catch(err){
+      self.emit(&#x27;error&#x27;, err);
+      return;
+    }
+
+    debug(&#x27;received request %j&#x27;, request);
+
+    switch (request.type) {
+
+      case requestTypes.clients:
+        Adapter.prototype.clients.call(self, request.rooms, function(err, clients){
+          if(err){
+            self.emit(&#x27;error&#x27;, err);
+            return;
+          }
+
+          var response = JSON.stringify({
+            requestid: request.requestid,
+            clients: clients
+          });
+
+          pub.publish(self.responseChannel, response);
+        });
+        break;
+
+      case requestTypes.clientRooms:
+        Adapter.prototype.clientRooms.call(self, request.sid, function(err, rooms){
+          if(err){
+            self.emit(&#x27;error&#x27;, err);
+            return;
+          }
+
+          if (!rooms) ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.socket.io-redis.io-redis.toString" id="apidoc.element.socket.io-redis.io-redis.toString">
+        function <span class="apidocSignatureSpan">socket.io-redis.</span>io-redis.toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">io-redis.toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.socket.io-redis.toString" id="apidoc.element.socket.io-redis.toString">
+        function <span class="apidocSignatureSpan">socket.io-redis.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  /**
+   * Called with a subscription message
+   *
+   * @api private
+   */
+
+  Redis.prototype.onmessage = function(channel, msg){
+channel = channel.<span class="apidocCodeKeywordSpan">toString</span>();
+
+if (this.channelMatches(channel, this.requestChannel)) {
+  return this.onrequest(channel, msg);
+} else if (this.channelMatches(channel, this.responseChannel)) {
+  return this.onresponse(channel, msg);
+} else if (!this.channelMatches(channel, this.channel)) {
+  return debug(&#x27;ignore different channel&#x27;);
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.socket.io-redis.toString" id="apidoc.module.socket.io-redis.toString">module socket.io-redis.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.socket.io-redis.toString.toString" id="apidoc.element.socket.io-redis.toString.toString">
+        function <span class="apidocSignatureSpan">socket.io-redis.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  /**
+   * Called with a subscription message
+   *
+   * @api private
+   */
+
+  Redis.prototype.onmessage = function(channel, msg){
+channel = channel.<span class="apidocCodeKeywordSpan">toString</span>();
+
+if (this.channelMatches(channel, this.requestChannel)) {
+  return this.onrequest(channel, msg);
+} else if (this.channelMatches(channel, this.responseChannel)) {
+  return this.onresponse(channel, msg);
+} else if (!this.channelMatches(channel, this.channel)) {
+  return debug(&#x27;ignore different channel&#x27;);
+...</pre></li>
+    </ul>
+
 
 </div>
 

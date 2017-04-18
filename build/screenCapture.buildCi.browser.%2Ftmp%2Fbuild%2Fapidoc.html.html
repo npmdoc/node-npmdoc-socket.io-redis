@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/socketio/socket.io-redis#readme"
-
-    >socket.io-redis (v4.0.0)</a>
+    <a href="https://github.com/socketio/socket.io-redis#readme">socket.io-redis (v4.0.0)</a>
 </h1>
 <h4>[![Build Status](https://travis-ci.org/socketio/socket.io-redis.svg?branch=master)](https://travis-ci.org/socketio/socket.io-redis) [![NPM version](https://badge.fury.io/js/socket.io-redis.svg)](http://badge.fury.io/js/socket.io-redis)</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.socket.io-redis">module socket.io-redis</a><ol>
 
@@ -120,7 +113,7 @@
   opts = opts || {};
 
   // handle options only
-  if (&#x27;object&#x27; == typeof uri) {
+  if ('object' == typeof uri) {
     opts = uri;
     uri = null;
   }
@@ -129,8 +122,8 @@
   var pub = opts.pubClient;
   var sub = opts.subClient;
 
-  var prefix = opts.key || &#x27;socket.io&#x27;;
-  var subEvent = opts.subEvent || &#x27;messageBuffer&#x27;;
+  var prefix = opts.key || 'socket.io';
+  var subEvent = opts.subEvent || 'messageBuffer';
   var requestsTimeout = opts.requestsTimeout || 1000;
   var withChannelMultiplexing = false !== opts.withChannelMultiplexing;
 
@@ -147,7 +140,7 @@
   if (!pub) pub = createClient();
   if (!sub) sub = createClient();
 
-  // this server&#x27;s key
+  // this server's key
   var uid = uid2(6);
 
 <span class="apidocCodeCommentSpan">  /**
@@ -165,9 +158,9 @@
     this.requestsTimeout = requestsTimeout;
     this.withChannelMultiplexing = withChannelMultiplexing;
 
-    this.channel = prefix + &#x27;#&#x27; + nsp.name + &#x27;#&#x27;;
-    this.requestChannel = prefix + &#x27;-request#&#x27; + this.nsp.name + &#x27;#&#x27;;
-    this.responseChannel = prefix + &#x27;-response#&#x27; + this.nsp.name + &#x27;#&#x27;;
+    this.channel = prefix + '#' + nsp.name + '#';
+    this.requestChannel = prefix + '-request#' + this.nsp.name + '#';
+    this.responseChannel = prefix + '-response#' + this.nsp.name + '#';
     this.requests = {};
     this.customHook = function(data, cb){ cb(null); }
 
@@ -186,16 +179,16 @@
     var self = this;
 
     sub.subscribe([this.channel, this.requestChannel, this.responseChannel], function(err){
-      if (err) self.emit(&#x27;error&#x27;, err);
+      if (err) self.emit('error', err);
     });
 
     sub.on(subEvent, this.onmessage.bind(this));
 
     function onError(err) {
-      self.emit(&#x27;error&#x27;, err);
+      self.emit('error', err);
     }
-    pub.on(&#x27;error&#x27;, onError);
-    sub.on(&#x27;error&#x27;, onError);
+    pub.on('error', onError);
+    sub.on('error', onError);
   }
 
   /**
@@ -218,22 +211,22 @@
     } else if (this.channelMatches(channel, this.responseChannel)) {
       return this.onresponse(channel, msg);
     } else if (!this.channelMatches(channel, this.channel)) {
-      return debug(&#x27;ignore different channel&#x27;);
+      return debug('ignore different channel');
     }
 
     var args = msgpack.decode(msg);
     var packet;
 
-    if (uid == args.shift()) return debug(&#x27;ignore same uid&#x27;);
+    if (uid == args.shift()) return debug('ignore same uid');
 
     packet = args[0];
 
-    if (packet &#x26;&#x26; packet.nsp === undefined) {
-      packet.nsp = &#x27;/&#x27;;
+    if (packet &amp;&amp; packet.nsp === undefined) {
+      packet.nsp = '/';
     }
 
     if (!packet || packet.nsp != this.nsp.name) {
-      return debug(&#x27;ignore different namespace&#x27;);
+      return debug('ignore different namespace');
     }
 
     args.push(true);
@@ -254,18 +247,18 @@
     try {
       request = JSON.parse(msg);
     } catch(err){
-      self.emit(&#x27;error&#x27;, err);
+      self.emit('error', err);
       return;
     }
 
-    debug(&#x27;received request %j&#x27;, request);
+    debug('received request %j', request);
 
     switch (request.type) {
 
       case requestTypes.clients:
         Adapter.prototype.clients.call(self, request.rooms, function(err, clients){
           if(err){
-            self.emit(&#x27;error&#x27;, err);
+            self.emit('error', err);
             return;
           }
 
@@ -281,7 +274,7 @@
       case requestTypes.clientRooms:
         Adapter.prototype.clientRooms.call(self, request.sid, function(err, rooms){
           if(err){
-            self.emit(&#x27;error&#x27;, err);
+            self.emit('error', err);
             return;
           }
 
@@ -331,7 +324,7 @@ if (this.channelMatches(channel, this.requestChannel)) {
 } else if (this.channelMatches(channel, this.responseChannel)) {
   return this.onresponse(channel, msg);
 } else if (!this.channelMatches(channel, this.channel)) {
-  return debug(&#x27;ignore different channel&#x27;);
+  return debug('ignore different channel');
 ...</pre></li>
     </ul>
 
@@ -365,7 +358,7 @@ if (this.channelMatches(channel, this.requestChannel)) {
 } else if (this.channelMatches(channel, this.responseChannel)) {
   return this.onresponse(channel, msg);
 } else if (!this.channelMatches(channel, this.channel)) {
-  return debug(&#x27;ignore different channel&#x27;);
+  return debug('ignore different channel');
 ...</pre></li>
     </ul>
 
@@ -378,3 +371,4 @@ if (this.channelMatches(channel, this.requestChannel)) {
     ]
 </div>
 </div>
+</body></html>
