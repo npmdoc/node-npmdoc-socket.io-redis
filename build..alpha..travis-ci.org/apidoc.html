@@ -70,37 +70,6 @@
 
         </li>
 
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.socket.io-redis.io-redis.toString">
-            function <span class="apidocSignatureSpan">socket.io-redis.</span>io-redis.toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.socket.io-redis.toString">
-            function <span class="apidocSignatureSpan">socket.io-redis.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.socket.io-redis.toString">module socket.io-redis.toString</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.socket.io-redis.toString.toString">
-            function <span class="apidocSignatureSpan">socket.io-redis.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
     </ol></li>
 
 </ol></div>
@@ -287,86 +256,6 @@
 
           if (!rooms) ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-
-    <h2>
-        <a href="#apidoc.element.socket.io-redis.io-redis.toString" id="apidoc.element.socket.io-redis.io-redis.toString">
-        function <span class="apidocSignatureSpan">socket.io-redis.</span>io-redis.toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">io-redis.toString = function () {
-    return text;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-
-    <h2>
-        <a href="#apidoc.element.socket.io-redis.toString" id="apidoc.element.socket.io-redis.toString">
-        function <span class="apidocSignatureSpan">socket.io-redis.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">toString = function () {
-    return text;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-  /**
-   * Called with a subscription message
-   *
-   * @api private
-   */
-
-  Redis.prototype.onmessage = function(channel, msg){
-channel = channel.<span class="apidocCodeKeywordSpan">toString</span>();
-
-if (this.channelMatches(channel, this.requestChannel)) {
-  return this.onrequest(channel, msg);
-} else if (this.channelMatches(channel, this.responseChannel)) {
-  return this.onresponse(channel, msg);
-} else if (!this.channelMatches(channel, this.channel)) {
-  return debug(&#x27;ignore different channel&#x27;);
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.socket.io-redis.toString" id="apidoc.module.socket.io-redis.toString">module socket.io-redis.toString</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.socket.io-redis.toString.toString" id="apidoc.element.socket.io-redis.toString.toString">
-        function <span class="apidocSignatureSpan">socket.io-redis.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-  /**
-   * Called with a subscription message
-   *
-   * @api private
-   */
-
-  Redis.prototype.onmessage = function(channel, msg){
-channel = channel.<span class="apidocCodeKeywordSpan">toString</span>();
-
-if (this.channelMatches(channel, this.requestChannel)) {
-  return this.onrequest(channel, msg);
-} else if (this.channelMatches(channel, this.responseChannel)) {
-  return this.onresponse(channel, msg);
-} else if (!this.channelMatches(channel, this.channel)) {
-  return debug(&#x27;ignore different channel&#x27;);
-...</pre></li>
     </ul>
 
 
