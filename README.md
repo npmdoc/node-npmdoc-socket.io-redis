@@ -1,6 +1,6 @@
 # npmdoc-socket.io-redis
 
-#### api documentation for  [socket.io-redis (v4.0.0)](https://github.com/socketio/socket.io-redis#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-socket.io-redis.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-socket.io-redis) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-socket.io-redis.svg)](https://travis-ci.org/npmdoc/node-npmdoc-socket.io-redis)
+#### basic api documentation for  [socket.io-redis (v4.0.0)](https://github.com/socketio/socket.io-redis#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-socket.io-redis.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-socket.io-redis) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-socket.io-redis.svg)](https://travis-ci.org/npmdoc/node-npmdoc-socket.io-redis)
 
 #### [![Build Status](https://travis-ci.org/socketio/socket.io-redis.svg?branch=master)](https://travis-ci.org/socketio/socket.io-redis) [![NPM version](https://badge.fury.io/js/socket.io-redis.svg)](http://badge.fury.io/js/socket.io-redis)
 
@@ -68,7 +68,8 @@
     "scripts": {
         "test": "mocha"
     },
-    "version": "4.0.0"
+    "version": "4.0.0",
+    "bin": {}
 }
 ```
 
